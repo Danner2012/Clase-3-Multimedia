@@ -1,1 +1,76 @@
-<p>avatar works!</p>
+  <div class="container">
+
+    <h2 [style.color]="tonoPrincipal()">
+      {{ aliasUsuario() }}
+    </h2>
+
+    <div class="canvas-avatar">
+      <div class="cabeza"
+          [style.background-color]="tonoPrincipal()"
+          [style.width.px]="dimensionAvatar()"
+          [style.height.px]="dimensionAvatar()"
+          [style.transform]="'rotate(' + anguloActual() + 'deg)'">
+
+        <div class="zona-ojos">
+          <div class="globo"></div>
+          <div class="globo"></div>
+
+          @if (estadoLentes()){
+            <div class="visor"></div>
+          }
+        </div>
+
+        <div class="zona-boca">
+          @switch (modoExpresion()){
+            @case (1) { <div class="sonrisa"></div> }
+            @case (2) { <div class="asombro"></div> }
+            @case (3) { <div class="neutral"></div> }
+          }
+        </div>
+
+      </div>
+    </div>
+
+    <div class="controles">
+
+      <label>
+        Nombre:
+        <input type="text"
+              (input)="modificarAlias($event)"
+              placeholder="Escribe tu nombre">
+      </label>
+
+      <button (click)="activarMovimiento()">
+        {{ enMovimiento ? 'Pausar ' : 'Iniciar ' }}
+      </button>
+
+      <label>
+        Color:
+        <input type="color"
+              [value]="tonoPrincipal()"
+              (input)="modificarColor($event)">
+      </label>
+
+      <label>
+        Tamaño:
+        <input type="range"
+              min="100"
+              max="300"
+              [value]="dimensionAvatar()"
+              (input)="modificarDimension($event)">
+      </label>
+
+      <button (click)="alternarLentes()">
+        {{ estadoLentes() ? 'Quitar lentes' : 'Poner lentes' }}
+      </button>
+
+      <div class="expresiones">
+        <p>Expresión</p>
+        <button (click)="cambiarModo(1)">Feliz</button>
+        <button (click)="cambiarModo(2)">Sorprendido</button>
+        <button (click)="cambiarModo(3)">Serio</button>
+      </div>
+
+    </div>
+
+  </div>
